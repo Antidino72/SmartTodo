@@ -1,0 +1,16 @@
+.card-perspective {
+    perspective: 1000px;
+}
+
+.card-3d-hover {
+    transition: transform 300ms ease-out, box-shadow 300ms ease-out;
+    transform-style: preserve-3d;
+}
+
+.card-3d-hover:hover {
+    transform: scale(1.05) translateY(-5px) rotateX(-5deg) rotateY(-5deg);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+}
+*{
+    user-select: none;
+}
