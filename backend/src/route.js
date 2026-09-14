@@ -16,7 +16,6 @@ function ValidateSession(req, res, next) {
         if (!session) {
             return res.status(401).json({ error: "Non autorisé - Veuillez vous connecter" });
         }
-        // ✅ On stocke la session complète dans req.session
         req.session = session;
         next();
     }).catch((error) => {
@@ -44,7 +43,25 @@ router.get("/api/tasks", ValidateSession, async (req, res) => {
     }
 });
 
+router.get("/organization/invite/:id", ValidateSession, async (req, res) => {
+    const id = req.params.id;
+    console.log("Session:", req.session.user.email);
+    console.log("Invitation ID:", req.params.id);
+    if (!id) {
+        return res.status(400).json({
+            error: "ID manquant."
+        });
+    }
 
+    const data = await auth.api.acceptInvitation({
+        body: {
+            invitationId: id,
+        },
+        headers: fromNodeHeaders(req.headers),
+    });
+
+    return res.json(data);
+});
 router.put("/api/tasks/:id", ValidateSession, async (req, res) => {
     try {
         const { id } = req.params;
@@ -87,7 +104,6 @@ router.post("/api/tasks", ValidateSession, async (req, res) => {
     try {
         const { title, description, category, priority, status } = req.body;
 
-        // ← vérifications
         if (!title || !title.trim()) {
             return res.status(400).json({ error: "Le titre est obligatoire" });
         }
@@ -133,7 +149,11 @@ router.delete("/api/tasks/:taskId", ValidateSession, async (req, res) => {
         res.status(500).json({ error: "Erreur interne du serveur" });
     }
 });
-
+router.use((req,res)=>{
+    res.status(404).json({
+        error : "Page non trouvez"
+    })
+})
 
 
 

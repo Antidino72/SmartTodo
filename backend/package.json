@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cls && node main.js",
-    "setup": "npm install && node ./cli/migrate.js",
-    "migrate": "node node_modules/better-auth/dist/cli/index.js migrate"
+    "setup": "npm install && node src/cli/migrate.js",
+    "migrate": "node node_modules/better-auth/dist/cli/index.js migrate",
+    "create_user": "node src/cli/create_user.js"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +19,11 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "pg": "^8.23.0"
+    "nodemailer": "^10.0.9",
+    "pg": "^8.23.0",
+    "resend": "^6.26.0",
+    "vitest": "^4.1.11",
+    "vittest": "^1.0.2"
   },
   "devDependencies": {
     "@types/pg": "^8.23.1"
